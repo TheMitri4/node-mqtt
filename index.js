@@ -5,10 +5,17 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
+require('./libs/auth');
+const oauth2 = require('./libs/oauth2');
+
+app.use(passport.initialize());
+
 // app.use(express.cookieParser());
 app.use(bodyParser());
 
 app.use(express.static('public'));
+
+app.post('/oauth/token', oauth2.token);
 
 app.get('/', function(req, res) {
     res.send('Hello world');
